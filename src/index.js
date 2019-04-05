@@ -10,6 +10,3 @@ app.use(express.static(publicDirectoryPath));
 app.listen(port, () => {
   console.log(`Server is up at port ${port} on ${new Date()}`);
 });
-
-// test submit
-// Test submit from iqbal
