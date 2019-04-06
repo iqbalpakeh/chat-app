@@ -6,7 +6,6 @@ socket.on("message", message => {
 
 document.querySelector("#message-form").addEventListener("submit", e => {
   e.preventDefault();
-
   const message = e.target.elements.message.value;
   socket.emit("sendMessage", message, error => {
     if (error) {
@@ -14,7 +13,6 @@ document.querySelector("#message-form").addEventListener("submit", e => {
     }
     console.log("Message delivered!");
   });
-
   e.target.elements.message.value = "";
 })
 
