@@ -5,9 +5,9 @@ const generateMessage = text => {
   }
 }
 
-const generateLocationMessage = text => {
+const generateLocationMessage = url => {
   return {
-    text,
+    url,
     createdAt: new Date().getTime()
   }
 }
