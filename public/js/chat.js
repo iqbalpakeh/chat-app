@@ -10,12 +10,10 @@ socket.on("message", message => {
 /**
  * Handle click message event
  */
-const chatForm = document.querySelector("#message-form");
-const message = document.querySelector("input");
-
-chatForm.addEventListener("submit", e => {
+document.querySelector("#message-form").addEventListener("submit", e => {
   e.preventDefault();
-  socket.emit("sendMessage", message.value);
-  message.value = "";
+  const message = e.target.elements.message.value;
+  socket.emit("sendMessage", message);
+  e.target.elements.message.value = "";
 })
 
