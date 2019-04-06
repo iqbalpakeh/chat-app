@@ -26,6 +26,13 @@ socket.on("message", message => {
 })
 
 /**
+ * Handle location message coming from server
+ */
+socket.on("locationMessage", message => {
+  console.log(message);
+})
+
+/**
  * Handle submit event to send message
  */
 $messageForm.addEventListener("submit", e => {
