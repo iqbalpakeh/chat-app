@@ -49,11 +49,12 @@ io.on("connection", socket => {
    * Event when client send message to server
    */
   socket.on("sendMessage", (message, callback) => {
+    const user = getUser(socket.id);
     const filter = new Filter();
     if (filter.isProfane(message)) {
       return callback("Profanity is not allowed!");
     }
-    io.to("Batam").emit("message", generateMessage(message));
+    io.to(user.room).emit("message", generateMessage(message));
     callback();
   });
 
@@ -61,7 +62,8 @@ io.on("connection", socket => {
    * Event when client send location to server
    */
   socket.on("sendLocation", (coords, callback) => {
-    io.to("Batam").emit(
+    const user = getUser(socket.id);
+    io.to(user.room).emit(
       "locationMessage",
       generateLocationMessage(
         `https://google.com/maps?q=${coords.latitude},${coords.longitude}`

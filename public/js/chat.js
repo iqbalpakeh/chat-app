@@ -13,12 +13,16 @@ const $messages = document.querySelector("#messages");
  * Templates
  */
 const messageTemplate = document.querySelector("#message-template").innerHTML;
-const locationMessageTemplate = document.querySelector("#location-message-template").innerHTML;
+const locationMessageTemplate = document.querySelector(
+  "#location-message-template"
+).innerHTML;
 
 /**
  * Options
  */
-const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
+});
 
 /**
  * Handle message coming from server
@@ -30,7 +34,7 @@ socket.on("message", message => {
     createdAt: moment(message.createdAt).format("h:mm a")
   });
   $messages.insertAdjacentHTML("beforeend", html);
-})
+});
 
 /**
  * Send join request to server
@@ -40,7 +44,7 @@ socket.emit("join", { username, room }, error => {
     alert(error);
     location.href = "/";
   }
-})
+});
 
 /**
  * Handle location message coming from server
@@ -52,18 +56,16 @@ socket.on("locationMessage", message => {
     createdAt: moment(message.createdAt).format("h:mm a")
   });
   $messages.insertAdjacentHTML("beforeend", html);
-})
+});
 
 /**
  * Handle submit event to send message
  */
 $messageForm.addEventListener("submit", e => {
-
   e.preventDefault();
   $messageFormButton.setAttribute("disabled", "disabled");
 
   socket.emit("sendMessage", $messageFormInput.value, error => {
-
     $messageFormButton.removeAttribute("disabled");
     $messageFormInput.value = "";
     $messageFormInput.focus();
@@ -73,13 +75,12 @@ $messageForm.addEventListener("submit", e => {
     }
     console.log("Message delivered!");
   });
-})
+});
 
 /**
  * Handle send location to server event
  */
 $sendLocationButton.addEventListener("click", e => {
-
   if (!navigator.geolocation) {
     return alert("Geolocation is not supported by your browser");
   }
@@ -87,12 +88,16 @@ $sendLocationButton.addEventListener("click", e => {
   $sendLocationButton.setAttribute("disabled", "disabled");
 
   navigator.geolocation.getCurrentPosition(position => {
-    socket.emit("sendLocation", {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude
-    }, ack => {
-      console.log(ack);
-      $sendLocationButton.removeAttribute("disabled");
-    });
-  })
-})
+    socket.emit(
+      "sendLocation",
+      {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      },
+      ack => {
+        console.log(ack);
+        $sendLocationButton.removeAttribute("disabled");
+      }
+    );
+  });
+});
