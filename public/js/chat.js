@@ -16,6 +16,11 @@ const messageTemplate = document.querySelector("#message-template").innerHTML;
 const locationMessageTemplate = document.querySelector("#location-message-template").innerHTML;
 
 /**
+ * Options
+ */
+const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true })
+
+/**
  * Handle message coming from server
  */
 socket.on("message", message => {
@@ -26,6 +31,11 @@ socket.on("message", message => {
   });
   $messages.insertAdjacentHTML("beforeend", html);
 })
+
+/**
+ * Send join request to server
+ */
+socket.emit("join", { username, room })
 
 /**
  * Handle location message coming from server
