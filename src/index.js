@@ -98,6 +98,9 @@ io.on("connection", socket => {
   });
 });
 
+/**
+ * Start express app on available port
+ */
 server.listen(port, () => {
   console.log(`Server is up at port ${port} on ${new Date()}`);
 });
