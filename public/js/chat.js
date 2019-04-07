@@ -35,7 +35,12 @@ socket.on("message", message => {
 /**
  * Send join request to server
  */
-socket.emit("join", { username, room })
+socket.emit("join", { username, room }, error => {
+  if (error) {
+    alert(error);
+    location.href = "/";
+  }
+})
 
 /**
  * Handle location message coming from server
