@@ -17,12 +17,18 @@ app.use(express.static(publicDirectoryPath));
 io.on("connection", socket => {
   console.log("New WebSocket connection!");
 
+  /**
+   * Event when user join the chat room
+   */
   socket.on("join", ({ username, room }) => {
     socket.join(room);
     socket.emit("message", generateMessage("Welcome!"));
     socket.broadcast.to(room).emit("message", generateMessage(`${username} has joined!`));
   })
 
+  /**
+   * Event when client send message to server
+   */
   socket.on("sendMessage", (message, callback) => {
     const filter = new Filter();
     if (filter.isProfane(message)) {
@@ -32,11 +38,17 @@ io.on("connection", socket => {
     callback();
   })
 
+  /**
+   * Event when client send location to server
+   */
   socket.on("sendLocation", (coords, callback) => {
     io.to("Batam").emit("locationMessage", generateLocationMessage(`https://google.com/maps?q=${coords.latitude},${coords.longitude}`));
     callback("Location shared!");
   })
 
+  /**
+   * Event when user disconect from chat room
+   */
   socket.on("disconnect", () => {
     io.to("Batam").emit("message", generateMessage("A user has left!"));
   })
