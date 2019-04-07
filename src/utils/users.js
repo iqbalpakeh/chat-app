@@ -40,11 +40,32 @@ const addUser = ({ id, username, room }) => {
  * 
  * @param {*} id of user
  */
-const removeUser = (id) => {
+const removeUser = id => {
   const index = users.findIndex(user => user.id === id);
   if (index !== -1) {
     return users.splice(index, 1)[0];
   }
+}
+
+/**
+ * get user by id
+ * 
+ * @param {*} id of user
+ */
+const getUser = id => {
+  const index = users.findIndex(user => user.id === id);
+  return users[index];
+}
+
+/**
+ * get all user in room
+ * 
+ * @param {*} room of users
+ */
+const getUsersInRoom = room => {
+  room = room.trim().toLowerCase();
+  const usersInRoom = users.filter(user => user.room === room);
+  return usersInRoom;
 }
 
 // ------------ Test!!
@@ -55,15 +76,20 @@ addUser({
   room: "Batam"
 });
 
+addUser({
+  id: 23,
+  username: "Aziza   ",
+  room: "Singapore"
+});
+
+addUser({
+  id: 24,
+  username: "Safiya   ",
+  room: "Batam"
+});
+
 console.log(users);
 
-const removedUser = removeUser(22);
+console.log(getUser(23))
 
-console.log(removedUser);
-console.log(users);
-
-// removeUser
-
-// getUser
-
-// getUsersinRoom
+console.log(getUsersInRoom("Batam"));
