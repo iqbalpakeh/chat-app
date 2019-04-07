@@ -61,6 +61,14 @@ socket.on("locationMessage", message => {
 });
 
 /**
+ * Handle room update information from server
+ */
+socket.on("roomData", ({ room, users }) => {
+  console.log(room);
+  console.log(users);
+});
+
+/**
  * Handle submit event to send message
  */
 $messageForm.addEventListener("submit", e => {
